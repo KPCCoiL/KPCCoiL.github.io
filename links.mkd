@@ -1,0 +1,11 @@
+---
+title: Links
+---
+
+<i class="fab fa-twitter fa-lg"></i> [\@coil\_kpc](https://twitter.com/coil_kpc)
+
+<i class="fab fa-github fa-lg"></i> [KPCCoiL](https://github.com/KPCCoiL)
+
+<i class="fab fa-slideshare fa-lg"></i> [coil_kpc](https://www.slideshare.net/coil_kpc?utm_campaign=profiletracking&utm_medium=sssite&utm_source=ssslideview)
+
+__AtCoder__ [C01L](https://atcoder.jp/users/C01L)
