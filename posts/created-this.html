@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>CoiL's Memorand[u/o]m - ブログを作った</title>
+
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            let mathElements = document.getElementsByClassName("math");
+            for (let i = 0; i < mathElements.length; i++) {
+              let texText = mathElements[i].firstChild;
+              if (mathElements[i].tagName == "SPAN") {
+                katex.render(texText.data, mathElements[i], {
+                  displayMode: mathElements[i].classList.contains("display"),
+                  throwOnError: false
+                });
+              }
+            }
+          });
+        </script>
+</head>
+    <body>
+        <div id="header">
+            <div id="logo">
+              <a href="../">CoiL's Memorand<span class="math">\left[\frac{u}{o}\right]</span>m</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../archive.html">Archive</a>
+                <a href="../tags.html">Tags</a>
+                <a href="../links.html">Links</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <div id="main">
+            <h1>ブログを作った</h1>
+            <div id="article">
+              <div class="info">
+    Posted on February 25, 2019<br>
+    Tags:
+    
+    <a href="../tags/this-blog.html">this-blog</a>
+    
+    <a href="../tags/Haskell.html">Haskell</a>
+    
+</div>
+
+<h1 id="作りました">作りました</h1>
+<p>GitHub Pagesで作っては壊しを何度かやった気がしますが、今までで一番まともに使う気でいます。</p>
+<h1 id="hakyll楽しい">Hakyll楽しい</h1>
+<p>Hakyllにはデフォルトでそれなりにまともなテンプレートがあり、結局ほぼいじらずデプロイするだけみたいになりがちでした(完全に私が悪い)。 なので何か別のやつ(<a href="https://github.com/scmorrison/uzu">これ</a>とか)も試してみたりはしたんですが、何か微妙にどう拡張すれば良いのか分かりにくいとか色々あり、いっそPandocでDIYすれば良いのでは? → それはもうHakyllで良いのでは? となって現在に至ります。</p>
+<p>未だに俺たちは雰囲気でHTML/CSSをやっている状態なのでデフォルトの面影がかなり残っていますね…… まぁ多分ちょいちょいいじるとは思います。 一回公開した方がモチベも生じると思うので……</p>
+<h2 id="hakyllのお気持ち">Hakyllのお気持ち</h2>
+<p><code>Context a</code>が「<code>Item a</code>から何かしらの情報(主に文字列とかそのリストとか)を生成するやつ」だとかそういうのを把握するまで結構かかってしまった感があるんですけど、型から分かれってことなんですかね。 まぁお気持ち先行型人間の私には型がなかったら地獄だった説もあるので恩恵でもあるのかもしれないですが。</p>
+<h1 id="katex"><span class="math inline">\KaTeX</span></h1>
+<p>数式には<span class="math inline">\KaTeX</span>を使っています。 Pandocが対応してるので適当にオプション渡してテンプレートに<code>link</code>とかするだけです。 現状CDNから取ってきてるんですけどこれもリポジトリに入れといた方が良いんですかね? まぁGitHubとCDNのサーバーのどっちが余裕あるか的な話な気はするのであんまり考えてもしょうがないのかなぁ…… レンダリングの速さから別のやつ(多分またこのブログに書きます)でも使う予定で、何かと遊びようがある気がします。 どうでもいいですが上にあるロゴの<span class="math inline">\left[\frac{u}{o}\right]</span>も<span class="math inline">\KaTeX</span>です(手抜き)。</p>
+<h1 id="ソースコード">ソースコード</h1>
+<p>何かCSSを適切に作ると良いはずなんですけど、最悪Gistを貼るって手があるので…… まぁ何もしなくても</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
+<a class="sourceLine" id="cb1-2" title="2">main <span class="ot">=</span> <span class="fu">putStrLn</span> <span class="st">&quot;Hello&quot;</span></a></code></pre></div>
+<p>ぐらいはできます。 ソースを見るとがんばってパースとかしてくれてるのが分かるので多分そのうち色がつきます。 。 # 日本語</p>
+<p>が書けないことが分かってきたんですが、語学は物量なので<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>ここに色々書いてるうちに改善されることを願いましょう。</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>誤解のないように言っておきますが、純粋な日本語母語話者です。<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+            </div>
+          </div>
+          
+          <div id="sidebar">
+            <a class="twitter-timeline" data-height="600" data-theme="light" href="https://twitter.com/coil_kpc?ref_src=twsrc%5Etfw">Tweets by coil_kpc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <div class="tagCloud" title="All Tags">
+              <a style="font-size: 80%" href="../tags/Haskell.html">Haskell</a> <a style="font-size: 80%" href="../tags/this-blog.html">this-blog</a>
+            </div>
+          </div>
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
