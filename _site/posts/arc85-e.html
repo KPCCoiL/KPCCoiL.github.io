@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>CoiL's Memorand[u/o]m - ARC85 E MUL</title>
+
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            let mathElements = document.getElementsByClassName("math");
+            for (let i = 0; i < mathElements.length; i++) {
+              let texText = mathElements[i].firstChild;
+              if (mathElements[i].tagName == "SPAN") {
+                katex.render(texText.data, mathElements[i], {
+                  displayMode: mathElements[i].classList.contains("display"),
+                  throwOnError: false
+                });
+              }
+            }
+          });
+        </script>
+</head>
+    <body>
+        <div id="header">
+            <div id="logo">
+              <a href="../">CoiL's Memorand<span class="math">\left[\frac{u}{o}\right]</span>m</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../archive.html">Archive</a>
+                <a href="../tags.html">Tags</a>
+                <a href="../links.html">Links</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <div id="main">
+            <h1>ARC85 E MUL</h1>
+            <div id="article">
+              <div class="info">
+    Posted on February 28, 2019<br>
+    Tags:
+    
+    <a href="../tags/AtCoder.html">AtCoder</a>
+    
+    <a href="../tags/ARC.html">ARC</a>
+    
+    <a href="../tags/競プロ.html">競プロ</a>
+    
+</div>
+
+<p><a href="https://atcoder.jp/contests/arc085/tasks/arc085_c">これ</a>。700点問題。 個人的に何かと学びの多い問題だったように思います。</p>
+<h1 id="問題概要">問題概要</h1>
+<p><span class="math inline">a_i (i = 1..N)</span>が与えられる。 <span class="math inline">x \in \{ 1.. N \}</span>を0コ以上選び、<span class="math inline">x</span>の倍数でないような<span class="math inline">i</span>の<span class="math inline">a_i</span>の和を最大化する。</p>
+<p>制約は<span class="math inline">1 \le N \le 100, |a_i| \le 10^9</span>。</p>
+<h1 id="解法">解法</h1>
+<p>この問題は<a href="https://img.atcoder.jp/arc085/editorial.pdf">解説</a>が大変親切で、まぁこれ読めば良いんですけど……</p>
+<ul>
+<li>2つの状態を割り振る問題であること</li>
+<li>諸々の制約が全て罰則に変換できること。具体的には、</li>
+<li>そもそも得るもの(<span class="math inline">a_i</span>)が負なら素直にやる</li>
+<li><span class="math inline">a_i</span>が正なら、先にもらっておいて逆の状況のときもらえなくなった=それだけ引かれた、とする</li>
+<li>倍数の関係で矛盾があったら<span class="math inline">\infty</span></li>
+</ul>
+<p>がポイントで、最小カットに帰着。 このへんの言い換え、フローに限らず何かと汎用性が高そうで学びがある。 符号で場合分けとかって物理やってると大体そのまま扱った方が自然だから浮かびにくい気がします。私だけか?</p>
+<h1 id="貪欲はダメなんですかという話">貪欲はダメなんですか、という話</h1>
+<p><a href="https://atcoder.jp/contests/arc085/submissions/4349144">最初に書いたの</a>が「大きな<span class="math inline">x</span>から順に、選んだ方が得するなら選ぶ」っていう貪欲だったんですよ。 ノリとしては<span class="math inline">x</span>を選んだとき<span class="math inline">x</span>より大きいものにしか影響しないのでそれより前は自由に決められるはずだから後ろからやれば良さそう、という感じです。</p>
+<p>とりあえず<span class="math inline">N=20</span>で倍数の関係を図にしてみたのがこれです。適当に辺を間引いてます。 <img src="../images/factors.png" alt="up to 20" /></p>
+<p>下にある頂点の価値が負だったらそれこそ何も言わずに消せば良いはずです。</p>
+<p>問題は入る辺が2つ以上の頂点(上の図だと18とか)が正で残った時。 簡単のため3, 6, 9, 18だけ考えることにすると、 <span class="math inline">(a_6, a_{9}, a_{18}) = (-10000000, -1, 2)</span>みたいな時にどうせ6を消すなら9も消しといた方が良かったじゃん、となる。</p>
+<h2 id="木とdagの違い">木とDAGの違い</h2>
+<p>冷静に考えると「そもそも木じゃないんだからそんなことないでしょ」のツッコミは入るべきだった気はする。 その辺の感覚が精進不足ってことなのかなぁ……</p>
+<p>DPはDAGのノードに対する_関数_を順に計算していくこと(多分)なんですけど、ここでいう関数っていうのは本当に純粋なそのノードの関数である必要があります<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
+<p>今回の問題の操作は「関数」ではない、具体的には下の方の状態に影響するので↑みたいなのは無理な訳です。 まぁ見れば分かるんですけど……</p>
+<p>もし上の図が木だったら貪欲(孫とかも見てるしDPとは言わない気がする)解でも多分大丈夫なはずです。 逆に言えば木の上で部分木に対して値を定める的なことをやる場合状態が変わっても良い可能性がある? まぁ今回は<span class="math inline">N=100</span>だからという特殊事情もあるんですが。</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>とか書いておいてアレなんですが、データ構造を持ち回るDPとかありましたね…… ノードの性質を動的に持ってるだけなのかな……<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+            </div>
+          </div>
+          
+          <div id="sidebar">
+            <a class="twitter-timeline" data-height="600" data-theme="light" href="https://twitter.com/coil_kpc?ref_src=twsrc%5Etfw">Tweets by coil_kpc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <div class="tagCloud" title="All Tags">
+              <a style="font-size: 80%" href="../tags/ARC.html">ARC</a> <a style="font-size: 80%" href="../tags/AtCoder.html">AtCoder</a> <a style="font-size: 80%" href="../tags/Haskell.html">Haskell</a> <a style="font-size: 80%" href="../tags/this-blog.html">this-blog</a> <a style="font-size: 80%" href="../tags/%E7%AB%B6%E3%83%97%E3%83%AD.html">競プロ</a>
+            </div>
+          </div>
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>

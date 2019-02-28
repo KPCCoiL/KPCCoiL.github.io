@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>CoiL's Memorand[u/o]m</title>
+    <link href="https://KPCCoiL.github.io/atom.xml" rel="self" />
+    <link href="https://KPCCoiL.github.io" />
+    <id>https://KPCCoiL.github.io/atom.xml</id>
+    <author>
+        <name>CoiL</name>
+        <email>copernicium@me.com</email>
+    </author>
+    <updated>2019-02-28T00:00:00Z</updated>
+    <entry>
+    <title>ARC85 E MUL</title>
+    <link href="https://KPCCoiL.github.io/posts/arc85-e.html" />
+    <id>https://KPCCoiL.github.io/posts/arc85-e.html</id>
+    <published>2019-02-28T00:00:00Z</published>
+    <updated>2019-02-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[ARC85-EとWA関連の考察(?)]]></summary>
+</entry>
+<entry>
+    <title>ブログを作った</title>
+    <link href="https://KPCCoiL.github.io/posts/created-this.html" />
+    <id>https://KPCCoiL.github.io/posts/created-this.html</id>
+    <published>2019-02-25T00:00:00Z</published>
+    <updated>2019-02-25T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Hakyll最高~~~~~~~]]></summary>
+</entry>
+
+</feed>
