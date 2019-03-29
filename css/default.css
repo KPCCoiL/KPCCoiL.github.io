@@ -104,3 +104,7 @@ a:link {
 a:visited {
   color: #1E656D;
 }
+
+img {
+  width: 100%;
+}
