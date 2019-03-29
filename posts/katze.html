@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>CoiL's Memorand[u/o]m - Katze - LaTeX数式入力支援ツール</title>
+
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            let mathElements = document.getElementsByClassName("math");
+            for (let i = 0; i < mathElements.length; i++) {
+              let texText = mathElements[i].firstChild;
+              if (mathElements[i].tagName == "SPAN") {
+                katex.render(texText.data, mathElements[i], {
+                  displayMode: mathElements[i].classList.contains("display"),
+                  throwOnError: false
+                });
+              }
+            }
+          });
+        </script>
+</head>
+    <body>
+        <div id="header">
+            <div id="logo">
+              <a href="../">CoiL's Memorand<span class="math">\left[\frac{u}{o}\right]</span>m</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../archive.html">Archive</a>
+                <a href="../tags.html">Tags</a>
+                <a href="../links.html">Links</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <div id="main">
+            <h1>Katze - LaTeX数式入力支援ツール</h1>
+            <div id="article">
+              <div class="info">
+    Posted on March 29, 2019<br>
+    Tags:
+    
+    <a href="../tags/NeoVim.html">NeoVim</a>
+    
+    <a href="../tags/HTML.html">HTML</a>
+    
+    <a href="../tags/JavaScript.html">JavaScript</a>
+    
+    <a href="../tags/Lua.html">Lua</a>
+    
+    <a href="../tags/TeX.html">TeX</a>
+    
+</div>
+
+<h2 id="demo">Demo</h2>
+<p>何はともあれ。コンパイルすると<code>\pdiff</code>がプレビュー上で使えるようになってるのがお分かりいただけると思います。 <img src="../images/katze-demo.gif" alt="Demo" /></p>
+<h2 id="何を作ったか">何を作ったか</h2>
+<p><a href="https://github.com/KPCCoiL/katze-nyaovim">Vim側</a>と<a href="https://github.com/KPCCoiL/katze-lualatex"><span class="math inline">\TeX</span>側</a>です。</p>
+<p><span class="math inline">\LaTeX</span>文書の数式をプレビューしながら書けるようにしました。 このとき定義したマクロが反映されるのが売り。 使ったものは</p>
+<ul>
+<li><a href="https://github.com/rhysd/NyaoVim">NyaoVim</a> : NeoVimのElectronフロントエンドで、UIプラグインを作って拡張できる</li>
+<li><span class="math inline">\KaTeX</span> : 主にWebページ上で数式をレンダリングするやつ。レンダリングが鬼のように速い</li>
+<li>Lua<span class="math inline">\LaTeX</span> : Luaで書かれたLaTeX処理系。Luaで拡張できる</li>
+</ul>
+<p>という感じです。 LuaとJSでソケット通信してマクロを同期し、バッファから数式を取ってきて<span class="math inline">\KaTeX</span>でNyaoVimの画面上に描画してます。 つまり、単にKatzeと言ってますがNyaoVimプラグインと<span class="math inline">\LaTeX</span>パッケージに分かれています。</p>
+<h2 id="動機">動機</h2>
+<p><span class="math inline">\LaTeX</span>数式って書きにくくないですか? 単に名前が長いとか、<code>\left</code>と<code>\right</code>の対応をミスして怒られるとか。 もちろんマクロを定義することで解決できる部分も大きいですが、<code>P^-1AP</code>とかってやって思ってたのと違う、とか<code>align</code>環境で改行忘れたとか完成形が見えてないことに起因するミスが生じやすいように思います。</p>
+<p>という訳で、マクロが使えるリアルタイムプレビューが欲しい、となります。 ずっとフロントエンド何も分からんと言いながら作っていたんですが、私自身が使いたかったのでそれなりにモチベが続いた面があります。</p>
+<p><span class="math inline">\TeX</span>自体と通信する以外の方針も考えたんですが、オレオレ数式マクロパッケージみたいなのを作ってパッケージオプションで挙動を切り換えられるようにしたときにプレビューに反映できるのはこのくらいかなぁと思ったのでこんな感じになりました。</p>
+<h2 id="構造">構造</h2>
+<p>NyaoVimはUIプラグインをWebComponentsとしてラップして使う方針を取っています。 メインはそのコンポーネント関連のJavaScriptです。</p>
+<p><span class="math inline">\TeX</span>とのマクロの同期はソケット通信です。 サーバーはJSで立てれば良いんですが、<span class="math inline">\TeX</span>自体にはソケット通信の機能がありません(それはそう)。 Lua<span class="math inline">\LaTeX</span>のLua処理系texluaはなぜかソケット通信ライブラリをバンドルしていて、これを使っています。 これがLua<span class="math inline">\LaTeX</span>しかサポートしてない主な理由です。 ソケット通信だけnetcatとかに投げてクロスエンジンにする手もあったはあったんですが単にガッツリ<span class="math inline">\TeX</span>プログラミングする気になれなかったんですよね……</p>
+<p>それと、一応LyXの存在は認識しています。 軽く触ってもみたんですが、オレオレマクロとの親和性が微妙なのかなぁと思っています。 ベクトルをいっぱい使う時にいちいち<code>\mathbf</code>って書きたくないので<code>\generatevector{EBDH}</code>と書くと<code>\vE</code> <span class="math inline">\to</span> <code>\mathbf{E}</code>等が定義されるマクロなんかを良く使うんですが、そういうのもやれるんですかね……? まぁ使いこんだとかでは全くないので大嘘言ってるかもしれないですが……</p>
+<h2 id="懸念">懸念</h2>
+<p>NyaoVim自体が1年くらいコミットがないようです。 当初は「個人で開発されてるものだしまぁしょうがないよねー」くらいであんまり気にしてなかったんですが、Webの新陳代謝はすごいようで、基盤になっている技術があんまり推奨されなくなってたりします(HTML importsなど)。 OSSなんだから貢献しろよという話は大変ごもっともなんですが外部の人間がいきなりガッツリ破壊的変更含むPR出すとかってどうなんですかね……? このへんのお作法が良く分かっておらず……</p>
+<p>NeoVimのElectronフロントエンドというと最近は<a href="https://github.com/onivim/oni">Oni</a>なんかもあるんですが、どうも単なるフロントエンドというよりVimの上に乗ったモダンな別エディタを目指してるようで思想から違いそうです。 次の<a href="https://github.com/onivim/oni2">Oni 2</a>ではVim Scriptはサポートしないとまで言ってますし。</p>
+<p>まぁ変な話プレビューさえ見られればそれがエディタとくっついてる必要は何もない訳で、どうしてもとなればKatze-Electronなりを別に作れば良くはあります。</p>
+<h2 id="これからの話">これからの話</h2>
+<p>何らかの形で改良はこれからも加えていくと思います(主に私が使いたいので)。 というか現状色々と作りが雑な所とか変なワークアラウンドとかもあるのでその辺も徐々にいじりたいですし、先程のこともあるのでNyaoVim本体への貢献含め検討したいところです。</p>
+
+            </div>
+          </div>
+          
+          <div id="sidebar">
+            <a class="twitter-timeline" data-height="600" data-theme="light" href="https://twitter.com/coil_kpc?ref_src=twsrc%5Etfw">Tweets by coil_kpc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <div class="tagCloud" title="All Tags">
+              <a style="font-size: 80%" href="../tags/ARC.html">ARC</a> <a style="font-size: 80%" href="../tags/AtCoder.html">AtCoder</a> <a style="font-size: 80%" href="../tags/HTML.html">HTML</a> <a style="font-size: 80%" href="../tags/Haskell.html">Haskell</a> <a style="font-size: 80%" href="../tags/JavaScript.html">JavaScript</a> <a style="font-size: 80%" href="../tags/Lua.html">Lua</a> <a style="font-size: 80%" href="../tags/NeoVim.html">NeoVim</a> <a style="font-size: 80%" href="../tags/TeX.html">TeX</a> <a style="font-size: 80%" href="../tags/this-blog.html">this-blog</a> <a style="font-size: 80%" href="../tags/%E7%AB%B6%E3%83%97%E3%83%AD.html">競プロ</a>
+            </div>
+          </div>
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
